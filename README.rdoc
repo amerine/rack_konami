@@ -13,7 +13,11 @@ It requires JQuery 1.4.0 or greater.
 	run app
 	
 == Usage in Rails 2.3.x
-
+In config/environment.rb
+	config.gem 'rack_clicky'
+	config.middleware.use Rack::Konami, :html => '<img src="/images/rails.png" >', :delay => '1500'
+	
+Open your browser and type ↑ ↑ ↓ ↓  ← →  ← → B A  ↵
 	
 == TODO
 * It probably wouldn't hurt to have more tests. 
