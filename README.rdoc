@@ -1,6 +1,23 @@
-= rack_konami
+= Rack::Konami
 
-Description goes here.
+Rack Middleware that embeds the Konami Code in your app and lets you fade in and out a snippet of html. 
+
+== Requirements 
+It requires JQuery 1.4.0 or greater.
+
+== Usage
+	gem install rack_konami
+	require 'rack_konami'
+	use Rack::Konami, :html => "<img src='/images/rails.png'>"
+	app = lambda { |env| [200, { 'Content-Type' => 'text/html' }, '<html><body><p>Awesome Body</p></body></html>'] }
+	run app
+	
+== Usage in Rails 2.3.x
+
+	
+== TODO
+* It probably wouldn't hurt to have more tests. 
+* Add support for embedding the asynchronous tracking code.
 
 == Note on Patches/Pull Requests
  
