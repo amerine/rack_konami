@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{rack_konami}
-  s.version = "0.8.0"
+  s.version = "0.9.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Mark Turner"]
@@ -24,6 +24,7 @@ Gem::Specification.new do |s|
      "Rakefile",
      "VERSION",
      "lib/rack_konami.rb",
+     "rack_konami.gemspec",
      "test/helper.rb",
      "test/test_rack_konami.rb"
   ]
