@@ -5,7 +5,7 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "rack_konami"
-    gem.summary = "Embed the Konamic code in your apps"
+    gem.summary = "Rack middlware that embeds the Konami code in your apps"
     gem.description = "Mixes the Konami code + JQuery to add Konami code effects to your app"
     gem.email = "mark@amerine.net"
     gem.homepage = "http://github.com/amerine/rack_konami"
