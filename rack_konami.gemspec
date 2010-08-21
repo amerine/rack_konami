@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{rack_konami}
-  s.version = "0.9.0"
+  s.version = "0.9.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Mark Turner"]
-  s.date = %q{2010-08-20}
+  s.date = %q{2010-08-21}
   s.description = %q{Mixes the Konami code + JQuery to add Konami code effects to your app}
   s.email = %q{mark@amerine.net}
   s.extra_rdoc_files = [
