@@ -16,7 +16,15 @@ It requires JQuery 1.4.0 or greater.
 In config/environment.rb
 	config.gem 'rack_clicky'
 	config.middleware.use Rack::Konami, :html => '<img src="/images/rails.png" >', :delay => '1500'
+	Open your browser and type ↑ ↑ ↓ ↓  ← →  ← → B A  ↵
 	
+== Rails 2.3.x / Sinatra
+In your Gemfile 
+	gem "rack_konami"
+	
+In your config.ru
+	use Rack::Konami, :html => '<img src="/images/rails.png" >', :delay => '1500'
+
 Open your browser and type ↑ ↑ ↓ ↓  ← →  ← → B A  ↵
 
 == Example
