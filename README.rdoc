@@ -18,6 +18,9 @@ In config/environment.rb
 	config.middleware.use Rack::Konami, :html => '<img src="/images/rails.png" >', :delay => '1500'
 	
 Open your browser and type ↑ ↑ ↓ ↓  ← →  ← → B A  ↵
+
+== Example
+Head over to http://www.cowpu.com and use the Konami code to check it out. 
 	
 == TODO
 * It probably wouldn't hurt to have more tests. 
