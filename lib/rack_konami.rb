@@ -1,6 +1,7 @@
-module Rack 
+require "rack_konami/version"
+
+module Rack
   class Konami
-    
     KONAMI_CODE = <<-EOTC 
     <div id="rack_konami" style="display:none;position:fixed;top:20%;right:50%;">
       {{HTML}}
@@ -19,40 +20,50 @@ module Rack
     	konami.load()
     </script>
     EOTC
-    
-    def initialize(app, options = {})
+
+    def initialize(app, options={})
       @app = app
-      @html = options[:html] || "<h1>Konami Code</h1>"
+      @html = options[:html] || "<!-- Konami Code -->"
       @delay = options[:delay] || 1000
     end
-    
-    def call(env)
-      dup._call(env)
-    end
-    
-    def _call(env)
-      
-      @status, @headers, @response = @app.call(env)
-      return [@status, @headers, @response] unless @headers['Content-Type'] =~ /html/
 
-      @headers.delete('Content-Length')
-      response = Rack::Response.new([], @status, @headers)
-      @response.each do |fragment|
-        response.write(inject_konami(fragment))
+    def call env
+      dup._call env
+    end
+
+    def _call env
+      status, headers, response = @app.call env
+
+      if should_inject_konami_code? status, headers, response
+        response = inject_konami_code response
+        fix_content_length(headers, response)
       end
-      response.finish
+
+      [status, headers, response]
     end
-    
-    def inject_konami(response)
-        response.sub!(/<\/body>/, "#{substitute_vars}\n</body>")
+
+    def should_inject_konami_code? status, headers, response
+      status == 200 &&
+      headers["Content-Type"] &&
+      (headers["Content-Type"].include?("text/html") || headers["Content-Type"].include?("application/xhtml"))
     end
-    
-    private
-    
+
+    def inject_konami_code response, body=""
+      response.each { |s| body << s.to_s }
+      body.gsub(/<\/body>/, "#{substitute_vars}\n</body>")
+    end
+
+    def fix_content_length headers, response
+      if headers["Content-Length"]
+        length = response.to_ary.inject(0) { |len, part| len + Rack::Utils.bytesize(part) }
+        headers['Content-Length'] = length.to_s
+      end
+    end
+
     def substitute_vars
-      KONAMI_CODE.sub(/\{\{HTML\}\}/, @html).sub!(/\{\{DELAY\}\}/, @delay.to_s)
+      code = KONAMI_CODE.gsub /\{\{HTML\}\}/, @html.to_s
+      code.gsub /\{\{DELAY\}\}/, @delay.to_s
     end
-    
+    private :substitute_vars
   end
-  
 end

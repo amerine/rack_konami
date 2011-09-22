@@ -36,7 +36,7 @@ class TestRackKonami < Test::Unit::TestCase
   
   EXPECTED_CODE = /<div\sid=.rack_konami.+konami\.load/m
   HTML_INCLUDED = /images\/rails.png/
-  HTML_DEFAULT = /<h1>Konami Code<\/h1>/
+  HTML_DEFAULT = /<!-- Konami Code -->/
   DELAY_INCLUDED = /\.delay\(500\)/
   DELAY_DEFAULT = /\.delay\(1000\)/
   
