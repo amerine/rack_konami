@@ -1,0 +1,90 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Rack::Konami by amerine</title>
+    
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Rack::Konami</h1>
+        <p>An Rack middlware that embeds the Konami code in your apps</p>
+        <p class="view"><a href="https://github.com/amerine/rack_konami">View the Project on GitHub <small>amerine/rack_konami</small></a></p>
+        <ul>
+          <li><a href="https://github.com/amerine/rack_konami/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/amerine/rack_konami/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/amerine/rack_konami">Fork On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h2>Rack::Konami</h2>
+
+<p>A Rack middleware component that embeds the Konami Code in your app and lets you fade in and out a snippet of html. </p>
+
+<h3>Requirements</h3>
+
+<p>It requires JQuery 1.4.0 or greater.</p>
+
+<h3>Installation</h3>
+
+<pre><code>gem install rack_konami
+</code></pre>
+
+<h3>Usage</h3>
+
+<pre><code>require 'rack_konami'
+use Rack::Konami, :html =&gt; "&lt;img src='/images/rails.png'&gt;"
+app = lambda { |env| [200, { 'Content-Type' =&gt; 'text/html' }, '&lt;html&gt;&lt;body&gt;&lt;p&gt;Awesome Body&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;'] }
+run app
+</code></pre>
+
+<h3>Rails 3.x / Sinatra</h3>
+
+<p>In your Gemfile </p>
+
+<pre><code>gem "rack_konami"
+</code></pre>
+
+<p>In your config.ru</p>
+
+<pre><code>use Rack::Konami, :html =&gt; '&lt;img src="/images/rails.png" &gt;', :delay =&gt; '1500'
+</code></pre>
+
+<p>Open your browser and type ↑ ↑ ↓ ↓  ← →  ← → B A  ↵</p>
+
+<h3>TODO</h3>
+
+<ul>
+<li>It probably wouldn't hurt to have more tests. </li>
+<li>Add support for embedding the asynchronous tracking code.</li>
+</ul><h3>Note on Patches/Pull Requests</h3>
+
+<ul>
+<li>Fork the project.</li>
+<li>Make your feature addition or bug fix.</li>
+<li>Add tests for it. This is important so I don't break it in a
+future version unintentionally.</li>
+<li>Commit, do not mess with rakefile, version, or history.
+(if you want to have your own version, that is fine but bump version in a commit by itself I can ignore when I pull)</li>
+<li>Send me a pull request. Bonus points for topic branches.</li>
+</ul><h3>Copyright</h3>
+
+<p>Copyright (c) 2010 Mark Turner. See LICENSE for details.</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/amerine">amerine</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><!--<![endif]-->
+  </body>
+</html>
