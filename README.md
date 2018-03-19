@@ -1,38 +1,53 @@
-= Rack::Konami
+# Rack::Konami
 
 Rack Middleware that embeds the Konami Code in your app and lets you fade in and out a snippet of html. 
 
-== Requirements 
+## Requirements 
 It requires JQuery 1.4.0 or greater.
 
-== Usage
-	gem install rack_konami
-	require 'rack_konami'
-	use Rack::Konami, :html => "<img src='/images/rails.png'>"
-	app = lambda { |env| [200, { 'Content-Type' => 'text/html' }, '<html><body><p>Awesome Body</p></body></html>'] }
-	run app
+## Usage
+
+```	
+$ gem install rack_konami
+```
+
+```ruby
+require 'rack_konami'
+
+use Rack::Konami, :html => "<img src='/images/rails.png'>"
+
+app = lambda { |env| [200, { 'Content-Type' => 'text/html' }, '<html><body><p>Awesome Body</p></body></html>'] }
+run app
+```
 	
-== Usage in Rails 2.3.x
+## Usage in Rails 2.3.x
+
 In config/environment.rb
+
 	config.gem 'rack_clicky'
 	config.middleware.use Rack::Konami, :html => '<img src="/images/rails.png" >', :delay => '1500'
 	Open your browser and type ↑ ↑ ↓ ↓  ← →  ← → B A  ↵
 	
-== Rails 3.x / Sinatra
+## Rails 3.x / Sinatra
 In your Gemfile 
+	
 	gem "rack_konami"
 	
 In your config.ru
-	use Rack::Konami, :html => '<img src="/images/rails.png" >', :delay => '1500'
 
-Open your browser and type ↑ ↑ ↓ ↓  ← →  ← → B A  ↵
+``
+use Rack::Konami, :html => '<img src="/images/rails.png" >', :delay => '1500'
+```
+
+Open your browser and type `↑ ↑ ↓ ↓  ← →  ← → B A  ↵`
 
 	
-== TODO
+## TODO
+
 * It probably wouldn't hurt to have more tests. 
 * Add support for embedding the asynchronous tracking code.
 
-== Note on Patches/Pull Requests
+## Note on Patches/Pull Requests
  
 * Fork the project.
 * Make your feature addition or bug fix.
@@ -42,6 +57,6 @@ Open your browser and type ↑ ↑ ↓ ↓  ← →  ← → B A  ↵
   (if you want to have your own version, that is fine but bump version in a commit by itself I can ignore when I pull)
 * Send me a pull request. Bonus points for topic branches.
 
-== Copyright
+## Copyright
 
 Copyright (c) 2010 Mark Turner. See LICENSE for details.
