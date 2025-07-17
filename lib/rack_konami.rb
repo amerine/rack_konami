@@ -54,15 +54,16 @@ module Rack
     end
 
     def fix_content_length headers, response
-      if headers["Content-Length"]
-        length = response.to_ary.inject(0) { |len, part| len + Rack::Utils.bytesize(part) }
-        headers['Content-Length'] = length.to_s
-      end
+      return unless headers["Content-Length"]
+
+      length = 0
+      Array(response).each { |part| length += part.to_s.bytesize }
+      headers['Content-Length'] = length.to_s
     end
 
     def substitute_vars
-      code = KONAMI_CODE.gsub /\{\{HTML\}\}/, @html.to_s
-      code.gsub /\{\{DELAY\}\}/, @delay.to_s
+      code = KONAMI_CODE.gsub(/\{\{HTML\}\}/, @html.to_s)
+      code.gsub(/\{\{DELAY\}\}/, @delay.to_s)
     end
     private :substitute_vars
   end

@@ -1,6 +1,12 @@
 # Rack::Konami
 
-Rack Middleware that embeds the Konami Code in your app and lets you fade in and out a snippet of html. 
+Rack Middleware that embeds the Konami Code in your app and lets you fade in and out a snippet of html.
+
+## Changes
+
+### 1.0.1
+
+* Updated for compatibility with Ruby 3 and Rack 3
 
 ## Requirements 
 It requires JQuery 1.4.0 or greater.
