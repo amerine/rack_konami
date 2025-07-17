@@ -57,6 +57,20 @@ Then in `config.ru`:
 use Rack::Konami, html: "<img src='/images/rails.png'>", delay: 1500
 ```
 
+### Rails 6.0 – 7.1
+
+Add the gem to your `Gemfile` and install:
+
+```ruby
+gem 'rack_konami'
+```
+
+Then configure middleware in `config/application.rb` (or an initializer):
+
+```ruby
+config.middleware.use Rack::Konami, html: "<img src='/images/rails.png'>", delay: 1500
+```
+
 Open your browser and type `\u2191 \u2191 \u2193 \u2193 \u2190 \u2192 \u2190 \u2192 B A \u21B5`.
 
 ## Running Tests
