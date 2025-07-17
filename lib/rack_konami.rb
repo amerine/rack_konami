@@ -13,11 +13,17 @@ module Rack
     x:y;result=this.tap==true?"TAP":result;if(result==this.keys[0])this.keys=this.keys.slice(1,this.keys.length);if(this.keys.length==0){this.keys=this.orig_keys;this.code(b)}}}};return a};
     </script>
     <script type="text/javascript">
-    	konami = new Konami()
-    	konami.code = function() {
-        $('#rack_konami').fadeIn('slow').delay({{DELAY}}).fadeOut('slow');
-      }
-    	konami.load()
+        konami = new Konami()
+        konami.code = function() {
+          var elem = document.getElementById('rack_konami');
+          if (window.jQuery) {
+            jQuery(elem).fadeIn('slow').delay({{DELAY}}).fadeOut('slow');
+          } else {
+            elem.style.display = 'block';
+            setTimeout(function() { elem.style.display = 'none'; }, {{DELAY}});
+          }
+        }
+        konami.load()
     </script>
     EOTC
 

@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.email       = ["mark@amerine.net"]
   s.homepage    = ""
   s.summary     = %q{Rack middlware that embeds the Konami code in your apps}
-  s.description = %q{Mixes the Konami code + JQuery to add Konami code effects to your app}
+  s.description = %q{Mixes the Konami code with JavaScript to add Konami code effects to your app. Uses jQuery when available.}
 
   s.rubyforge_project = "rack_konami"
 
