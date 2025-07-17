@@ -1,7 +1,7 @@
 # Rack::Konami
 
 Rack::Konami is a Rack middleware that injects a hidden snippet into your pages.
-When a user enters the Konami Code (\u2191 \u2191 \u2193 \u2193 \u2190 \u2192 \u2190 \u2192 B A \u21B5), the
+When a user enters the Konami Code (↑ ↑ ↓ ↓ ← → ← → B A ↵), the
 snippet fades in and then disappears after a configurable delay.
 
 ## Features
@@ -71,7 +71,7 @@ Then configure middleware in `config/application.rb` (or an initializer):
 config.middleware.use Rack::Konami, html: "<img src='/images/rails.png'>", delay: 1500
 ```
 
-Open your browser and type `\u2191 \u2191 \u2193 \u2193 \u2190 \u2192 \u2190 \u2192 B A \u21B5`.
+Open your browser and type `↑ ↑ ↓ ↓ ← → ← → B A ↵`.
 
 ## Running Tests
 
