@@ -8,8 +8,8 @@ Rack Middleware that embeds the Konami Code in your app and lets you fade in and
 
 * Updated for compatibility with Ruby 3 and Rack 3
 
-## Requirements 
-It requires JQuery 1.4.0 or greater.
+## Requirements
+Works with jQuery 1.4.0 or greater but falls back to vanilla JavaScript when jQuery isn't available.
 
 ## Usage
 
