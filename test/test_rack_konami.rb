@@ -11,10 +11,15 @@ class TestRackKonami < Test::Unit::TestCase
       assert_match EXPECTED_CODE, request(:content_type => 'application/xhtml+xml').body
     end
     
-    should "not place the konami code in a non HTML request" do
-      assert_no_match EXPECTED_CODE, request(:content_type => 'application/xml', :body => [XML]).body
+      should "not place the konami code in a non HTML request" do
+        assert_no_match EXPECTED_CODE, request(:content_type => 'application/xml', :body => [XML]).body
+      end
+
+      should "update the Content-Length header when present" do
+        res = request(:content_length => true)
+        assert_equal res.body.bytesize.to_s, res["Content-Length"]
+      end
     end
-  end
   
   context "Passing Options to Rack::Konami" do
     should "use the HTML you specified when using the app " do
@@ -73,9 +78,13 @@ class TestRackKonami < Test::Unit::TestCase
     options = options.clone
     options[:content_type] ||= "text/html"
     options[:body]         ||= [HTML]
+    length_header = options.delete(:content_length)
     options[:html]         || nil
     options[:delay]        || nil
-    rack_app = lambda { |env| [200, { 'Content-Type' => options.delete(:content_type) }, options.delete(:body)] }
+    headers = { 'Content-Type' => options.delete(:content_type) }
+    body    = options.delete(:body)
+    headers['Content-Length'] = body.join.bytesize.to_s if length_header
+    rack_app = lambda { |env| [200, headers, body] }
     Rack::Konami.new(rack_app, :html => options[:html], :delay => options[:delay])
   end
   
