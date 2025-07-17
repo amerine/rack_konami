@@ -24,7 +24,7 @@ module Rack
     def initialize(app, options={})
       @app = app
       @html = options[:html] || "<!-- Konami Code -->"
-      @delay = options[:delay] || 1000
+      @delay = sanitize_delay(options[:delay])
     end
 
     def call env
@@ -74,5 +74,13 @@ module Rack
       code.gsub(/\{\{DELAY\}\}/, @delay.to_s)
     end
     private :substitute_vars
+
+    def sanitize_delay(value)
+      value = 1000 if value.nil?
+      Integer(value)
+    rescue ArgumentError, TypeError
+      1000
+    end
+    private :sanitize_delay
   end
 end
