@@ -43,9 +43,11 @@ module Rack
     end
 
     def should_inject_konami_code? status, headers, response
+      content_type = headers["Content-Type"] || headers["content-type"]
+
       status == 200 &&
-      headers["Content-Type"] &&
-      (headers["Content-Type"].include?("text/html") || headers["Content-Type"].include?("application/xhtml"))
+      content_type &&
+      (content_type.include?("text/html") || content_type.include?("application/xhtml"))
     end
 
     def inject_konami_code response, body=""
@@ -54,11 +56,17 @@ module Rack
     end
 
     def fix_content_length headers, response
-      return unless headers["Content-Length"]
+      key = if headers.key?('Content-Length')
+              'Content-Length'
+            elsif headers.key?('content-length')
+              'content-length'
+            end
+
+      return unless key
 
       length = 0
       Array(response).each { |part| length += part.to_s.bytesize }
-      headers['Content-Length'] = length.to_s
+      headers[key] = length.to_s
     end
 
     def substitute_vars
