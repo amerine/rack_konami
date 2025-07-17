@@ -10,6 +10,10 @@ class TestRackKonami < Test::Unit::TestCase
     should "place the konami code at the end of an XHTML request" do
       assert_match EXPECTED_CODE, request(:content_type => 'application/xhtml+xml').body
     end
+
+    should "place the konami code when content-type header is lowercase" do
+      assert_match EXPECTED_CODE, request(:downcase => true).body
+    end
     
       should "not place the konami code in a non HTML request" do
         assert_no_match EXPECTED_CODE, request(:content_type => 'application/xml', :body => [XML]).body
@@ -18,6 +22,11 @@ class TestRackKonami < Test::Unit::TestCase
       should "update the Content-Length header when present" do
         res = request(:content_length => true)
         assert_equal res.body.bytesize.to_s, res["Content-Length"]
+      end
+
+      should "update the lowercase Content-Length header when present" do
+        res = request(:content_length => true, :downcase => true)
+        assert_equal res.body.bytesize.to_s, res["content-length"]
       end
     end
   
@@ -79,11 +88,14 @@ class TestRackKonami < Test::Unit::TestCase
     options[:content_type] ||= "text/html"
     options[:body]         ||= [HTML]
     length_header = options.delete(:content_length)
+    downcase = options.delete(:downcase)
     options[:html]         || nil
     options[:delay]        || nil
-    headers = { 'Content-Type' => options.delete(:content_type) }
+    ct_key = downcase ? 'content-type' : 'Content-Type'
+    cl_key = downcase ? 'content-length' : 'Content-Length'
+    headers = { ct_key => options.delete(:content_type) }
     body    = options.delete(:body)
-    headers['Content-Length'] = body.join.bytesize.to_s if length_header
+    headers[cl_key] = body.join.bytesize.to_s if length_header
     rack_app = lambda { |env| [200, headers, body] }
     Rack::Konami.new(rack_app, :html => options[:html], :delay => options[:delay])
   end
