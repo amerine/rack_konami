@@ -44,6 +44,30 @@ class TestRackKonami < Test::Unit::TestCase
       assert_match HTML_DEFAULT, request.body
     end
   end
+
+  context "Edge cases for Rack::Konami" do
+    should "not place the konami code when Content-Type header missing" do
+      rack_app = lambda { |env| [200, {}, [HTML]] }
+      res = Rack::MockRequest.new(Rack::Konami.new(rack_app)).get('/')
+      assert_no_match EXPECTED_CODE, res.body
+    end
+
+    should "not place the konami code for non-200 responses" do
+      rack_app = lambda { |env| [404, { 'Content-Type' => 'text/html' }, [HTML]] }
+      res = Rack::MockRequest.new(Rack::Konami.new(rack_app)).get('/')
+      assert_no_match EXPECTED_CODE, res.body
+    end
+
+    should "place the konami code when Content-Type has charset information" do
+      assert_match EXPECTED_CODE, request(:content_type => 'text/html; charset=utf-8').body
+    end
+
+    should "not place the konami code when header name is unconventional" do
+      rack_app = lambda { |env| [200, { 'CONTENT-TYPE' => 'text/html' }, [HTML]] }
+      res = Rack::MockRequest.new(Rack::Konami.new(rack_app)).get('/')
+      assert_no_match EXPECTED_CODE, res.body
+    end
+  end
   
   
   private
