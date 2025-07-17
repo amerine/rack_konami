@@ -1,68 +1,93 @@
 # Rack::Konami
 
-Rack Middleware that embeds the Konami Code in your app and lets you fade in and out a snippet of html.
+Rack::Konami is a Rack middleware that injects a hidden snippet into your pages.
+When a user enters the Konami Code (↑ ↑ ↓ ↓ ← → ← → B A ↵), the
+snippet fades in and then disappears after a configurable delay.
 
-## Changes
+## Features
 
-### 1.0.1
+* Works with jQuery 1.4 or later, falling back to vanilla JavaScript if jQuery isn't present.
+* Supports both keyboard and touch devices.
+* Configurable HTML snippet and fade-out delay.
+* Automatically updates the `Content-Length` header when injecting content.
+* Compatible with Ruby 3 and Rack 3.
 
-* Updated for compatibility with Ruby 3 and Rack 3
+## Installation
 
-## Requirements
-Works with jQuery 1.4.0 or greater but falls back to vanilla JavaScript when jQuery isn't available.
-
-## Usage
-
-```	
-$ gem install rack_konami
+```bash
+gem install rack_konami
 ```
+
+## Basic Usage
 
 ```ruby
 require 'rack_konami'
 
-use Rack::Konami, :html => "<img src='/images/rails.png'>"
+use Rack::Konami, html: "<img src='/images/rails.png'>", delay: 1500
 
-app = lambda { |env| [200, { 'Content-Type' => 'text/html' }, '<html><body><p>Awesome Body</p></body></html>'] }
+app = lambda do |env|
+  [200, { 'Content-Type' => 'text/html' }, '<html><body><p>Awesome Body</p></body></html>']
+end
+
 run app
 ```
-	
-## Usage in Rails 2.3.x
 
-In config/environment.rb
+## Rails and Sinatra
 
-	config.gem 'rack_clicky'
-	config.middleware.use Rack::Konami, :html => '<img src="/images/rails.png" >', :delay => '1500'
-	Open your browser and type ↑ ↑ ↓ ↓  ← →  ← → B A  ↵
-	
-## Rails 3.x / Sinatra
-In your Gemfile 
-	
-	gem "rack_konami"
-	
-In your config.ru
+### Rails 2.3.x
 
-``
-use Rack::Konami, :html => '<img src="/images/rails.png" >', :delay => '1500'
+Add to `config/environment.rb`:
+
+```ruby
+config.gem 'rack_konami'
+config.middleware.use Rack::Konami, html: "<img src='/images/rails.png'>", delay: 1500
 ```
 
-Open your browser and type `↑ ↑ ↓ ↓  ← →  ← → B A  ↵`
+### Rails 3.x / Sinatra
 
-	
-## TODO
+Add to your `Gemfile`:
 
-* It probably wouldn't hurt to have more tests. 
-* Add support for embedding the asynchronous tracking code.
+```ruby
+gem 'rack_konami'
+```
 
-## Note on Patches/Pull Requests
- 
-* Fork the project.
-* Make your feature addition or bug fix.
-* Add tests for it. This is important so I don't break it in a
-  future version unintentionally.
-* Commit, do not mess with rakefile, version, or history.
-  (if you want to have your own version, that is fine but bump version in a commit by itself I can ignore when I pull)
-* Send me a pull request. Bonus points for topic branches.
+Then in `config.ru`:
 
-## Copyright
+```ruby
+use Rack::Konami, html: "<img src='/images/rails.png'>", delay: 1500
+```
 
-Copyright (c) 2010 Mark Turner. See LICENSE for details.
+### Rails 6.0 – 7.1
+
+Add the gem to your `Gemfile` and install:
+
+```ruby
+gem 'rack_konami'
+```
+
+Then configure middleware in `config/application.rb` (or an initializer):
+
+```ruby
+config.middleware.use Rack::Konami, html: "<img src='/images/rails.png'>", delay: 1500
+```
+
+Open your browser and type `↑ ↑ ↓ ↓ ← → ← → B A ↵`.
+
+## Running Tests
+
+```bash
+bundle install
+bundle exec rake test
+```
+
+## Contributing
+
+1. Fork the project.
+2. Make your feature addition or bug fix.
+3. Add tests so future changes don't break your code.
+4. Commit without modifying the Rakefile, version, or history.
+5. Send a pull request (topic branches are appreciated).
+
+## License
+
+Copyright (c) 2010-2025 Mark Turner. See LICENSE for details.
